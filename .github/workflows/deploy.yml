@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no hostapp@172.184.216.215 << 'EOF'
-            cd /path/to/your/html/project/on/server
+            cd /var/www/html/my-html-project
             git pull origin main
             sudo systemctl reload nginx
           EOF
