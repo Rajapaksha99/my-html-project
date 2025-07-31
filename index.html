@@ -170,5 +170,29 @@
     <p>&copy;  Delicious Bites. All rights reserved.</p>
   </footer>
 
+
+<script>
+  let currentVersion;
+
+  async function checkForUpdate() {
+    try {
+      const res = await fetch("/my-html-project/version.txt", { cache: "no-store" });
+      const newVersion = await res.text();
+
+      if (!currentVersion) {
+        currentVersion = newVersion;
+      } else if (currentVersion !== newVersion) {
+        console.log("New version detected. Reloading...");
+        location.reload();
+      }
+    } catch (e) {
+      console.error("Failed to fetch version info", e);
+    }
+  }
+
+  setInterval(checkForUpdate, 5000); // every 5 seconds
+</script>
+
+
 </body>
 </html>
