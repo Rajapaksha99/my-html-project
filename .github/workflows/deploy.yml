@@ -1,0 +1,27 @@
+name: Deploy to Ubuntu server
+
+on:
+  push:
+    branches:
+      - main   # or your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no hostapp@172.184.216.215 << 'EOF'
+            cd /path/to/your/html/project/on/server
+            git pull origin main
+            sudo systemctl reload nginx
+          EOF
