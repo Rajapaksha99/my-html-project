@@ -18,12 +18,8 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Generate version.txt with timestamp
-        run: echo "v$(date +'%Y%m%d%H%M%S')" > version.txt
-
-      - name: Deploy to server via SSH and SCP
+      - name: Deploy to server via SSH
         run: |
-          scp -o StrictHostKeyChecking=no version.txt hostapp@172.184.216.215:/var/www/html/my-html-project/
           ssh -o StrictHostKeyChecking=no hostapp@172.184.216.215 << 'EOF'
             rm -rf /var/www/html/my-html-project
             git clone https://github.com/Rajapaksha99/my-html-project.git /var/www/html/my-html-project
